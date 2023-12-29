@@ -1,0 +1,63 @@
+@{
+    ViewData["Title"] = "Thông báo";
+    Layout = "_Layout";
+}
+@using Microsoft.AspNetCore.Identity
+@using DAFW_IS220.Models
+@inject SignInManager<AppUser> SignInManager
+
+@model App.Areas.Identity.Models.AccountViewModels.RegisterViewModel
+
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Đăng nhập / Đăng ký</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="index.php">Trang chủ<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="#">Đăng nhập / Đăng ký</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+<!--================Login Box Area =================-->
+<section class="login_box_area section_gap">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="login_box_img">
+                    <img class="img-fluid" src="~/img/LoginImg.jpg" alt="">
+                    <div class="hover">
+                        <h4>Đã có tài khoản?</h4>
+                        <p>Đăng nhập vào website của chúng tôi!</p>
+                        <a class="primary-btn" asp-area="Identity" asp-action="login" asp-controller="account">Đăng nhập</a>
+                    </div>
+                </div>
+            </div>
+            <<style>
+                 .title {
+                     text-align: center;
+                     margin-bottom: 0; /* Loại bỏ khoảng cách dưới tiêu đề */
+                 }
+
+                 .message {
+                     text-align: center;
+                     margin-top: 0.5em; /* Khoảng cách nhỏ giữa tiêu đề và thông điệp */
+                     font-size: 16px;
+                     color: #555;
+                 }
+            </style>
+
+            <div class="title-container">
+                <h1 class="title">@ViewData["Title"]</h1>
+                <p class="message">
+                    Hãy kiểm tra hòm thư để biết cách xác thực tài khoản
+                </p>
+            </div>
+
+        </div>
+    </div>
+</section>

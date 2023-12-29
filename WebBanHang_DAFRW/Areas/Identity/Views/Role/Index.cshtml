@@ -1,0 +1,58 @@
+@model List<App.Areas.Identity.Models.RoleViewModels.RoleModel>
+@{
+    ViewData["Title"] = "Danh sách các role (vai trò)";
+    Layout = "_LayoutAdmin";
+}
+
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>@ViewData["Title"]</h1>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<partial name="_StatusMessage"></partial>
+
+
+<section class="content">
+
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <div class="mb-2">
+                <a class="btn btn-secondary" asp-action="Create">Tạo role mới</a>
+                <a class="btn btn-secondary" asp-action="Index" asp-controller="User">Quản lý thành viên</a>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <table class="table">
+                <tr>
+                    <th>Tên Role (vai trò)</th>
+                    <th>Tác vụ</th>
+                </tr>
+                @foreach (var role in Model)
+                {
+                    <tr>
+                        <td>
+                            <p>@role.Name</p>
+                            @foreach (var claim in @role.Claims)
+                            {
+                                <small>@claim</small>
+
+                                <br>
+                            }
+                        </td>
+                        <td>
+                            <a class="btn btn-info btn-sm" asp-action="Edit" asp-route-roleid="@role.Id"><i class="fas fa-pencil-alt"></i>Edit</a>
+                            <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-roleid="@role.Id"><i class="fas fa-trash"></i>Delete</a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</section>

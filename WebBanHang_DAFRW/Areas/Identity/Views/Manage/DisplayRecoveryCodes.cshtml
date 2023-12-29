@@ -1,0 +1,35 @@
+﻿@model App.Areas.Identity.Models.ManageViewModels.DisplayRecoveryCodesViewModel
+@{
+    ViewData["Title"] = "Mã phục hồi";
+    Layout = "_layout";
+}
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Giới thiệu</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="index.html">Trang chủ<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="#">Thông tin</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<h1>@ViewData["Title"].</h1>
+<p class="text-success">@ViewData["StatusMessage"]</p>
+
+<div style="margin-left: 60px;">
+    <h4>Đây là các mã phục hồi của bạn</h4>
+    <p>Lưu trữ các mã này đề phòng khi đăng nhập cần xác thực hai yếu tố</p>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Codes:</dt>
+        @foreach (var code in Model.Codes)
+        {
+        <dd>
+            <text>@code</text>
+        </dd>
+        }
+    </dl>
+</div>

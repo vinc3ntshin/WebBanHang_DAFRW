@@ -1,0 +1,159 @@
+﻿@model ProductModel
+@{
+    ViewData["title"] = "Product Details";
+}
+<!-- Content Header (Page header) -->
+
+
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Sản phẩm</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="/home">Trang chủ<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="#">Sản phẩm</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+<div class="container">
+    <div class="row">
+        <div class="col-xl-3 col-lg-4 col-md-5">
+            <div class="sidebar-categories">
+                <div class="head">Category</div>
+                <ul class="main-categories">
+                    <li class="main-nav-list">
+                        <a asp-action="Index" asp-controller="Category" asp-route-slug="Laptop">
+                            <span class="lnr lnr-arrow-right"></span>Laptop
+                        </a>
+                    </li>
+
+                    <li class="main-nav-list">
+                        <a asp-action="Index" asp-controller="Category" asp-route-slug="PC">
+                            <span class="lnr lnr-arrow-right"></span>PC
+                        </a>
+                    </li>
+                    <li class="main-nav-list">
+                        <a asp-action="Index" asp-controller="Category" asp-route-slug="Macbook">
+                            <span class="lnr lnr-arrow-right"></span>Macbook
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="sidebar-categories">
+                <div class="head">Brand</div>
+                <ul class="main-categories">
+                    <li class="main-nav-list">
+                        <a asp-action="Index" asp-controller="Brand" asp-route-slug="Dell">
+                            <span class="lnr lnr-arrow-right"></span>Dell
+                        </a>
+                    </li>
+                    <li class="main-nav-list">
+                        <a asp-action="Index" asp-controller="Brand" asp-route-slug="Lenovop">
+                            <span class="lnr lnr-arrow-right"></span>Lenovo
+                        </a>
+                    </li>
+                    <li class="main-nav-list">
+                        <a asp-action="Index" asp-controller="Brand" asp-route-slug="HP">
+                            <span class="lnr lnr-arrow-right"></span>HP
+                        </a>
+                    </li>
+                    <li class="main-nav-list">
+                        <a asp-action="Index" asp-controller="Brand" asp-route-slug="Asus">
+                            <span class="lnr lnr-arrow-right"></span>Asus
+                        </a>
+                    </li>
+                    <li class="main-nav-list">
+                        <a asp-action="Index" asp-controller="Brand" asp-route-slug="Acer">
+                            <span class="lnr lnr-arrow-right"></span>Acer
+                        </a>
+                    </li>
+                    <li class="main-nav-list">
+                        <a asp-action="Index" asp-controller="Brand" asp-route-slug="MSI">
+                            <span class="lnr lnr-arrow-right"></span>MSI
+                        </a>
+                    </li>
+                    <li class="main-nav-list">
+                        <a asp-action="Index" asp-controller="Brand" asp-route-slug="Sony">
+                            <span class="lnr lnr-arrow-right"></span>Sony
+                        </a>
+                    </li>
+                    <li class="main-nav-list">
+                        <a asp-action="Index" asp-controller="Brand" asp-route-slug="Microsoft">
+                            <span class="lnr lnr-arrow-right"></span>Microsoft
+                        </a>
+                    </li>
+                    <li class="main-nav-list">
+                        <a asp-action="Index" asp-controller="Brand" asp-route-slug="Samsung">
+                            <span class="lnr lnr-arrow-right"></span>Samsung
+                        </a>
+                    </li>
+                    <li class="main-nav-list">
+                        <a asp-action="Index" asp-controller="Brand" asp-route-slug="LG">
+                            <span class="lnr lnr-arrow-right"></span>LG
+                        </a>
+                    </li>
+                    <li class="main-nav-list">
+                        <a asp-action="Index" asp-controller="Brand" asp-route-slug="Apple">
+                            <span class="lnr lnr-arrow-right"></span>Apple
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-xl-9 col-lg-8 col-md-7">
+            <!-- Start Filter Bar -->
+            <div class="filter-bar d-flex flex-wrap align-items-center">
+                <div class="sorting">
+                    <br>
+                </div>
+            </div>
+            <!-- End Filter Bar -->
+            <!-- Start Best Seller -->
+            <section class="content">
+
+                <!-- Default box -->
+                <div class="card card-solid">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 col-sm-6">
+                                <h3 class="d-inline-block d-sm-none"></h3>
+                                <div class="col-12">
+                                    <img src="~/media/products/@Model.Image" class="product-image col-12" alt="Product Image">
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <h3 class="my-3">@Model.Name</h3>
+                                <p>@Model.Description</p>
+
+                                <hr>
+                                <div class="bg-gray py-2 px-3 mt-4">
+                                    <h2 class="mb-0">
+                                        @Model.Price.ToString("N0") VNĐ
+                                    </h2>
+                                </div>
+
+                                <div class="mt-4">
+                                    <a class="gray_btn" class="nav-link" asp-controller="Product" asp-action="Index">Tiếp tục shopping</a>
+                                    <a asp-action="Add" asp-controller="Cart" asp-route-Id="@Model.Id" class="primary-btn">Thêm vào giỏ hàng</a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+
+            </section>
+        </div>
+    </div>
+</div>
+
+<!-- Main content -->
+
+<!-- /.content -->

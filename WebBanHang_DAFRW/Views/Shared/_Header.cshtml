@@ -1,0 +1,127 @@
+﻿@using System.Collections.Generic
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Authentication
+@using App.Areas.Identity.Models.AccountViewModels
+@using Microsoft.AspNetCore.Identity
+@using DAFW_IS220.Models
+@using Microsoft.AspNetCore.Authorization
+@inject SignInManager<AppUser> SignInManager
+@inject App.Areas.Identity.Models.AccountViewModels.RegisterViewModel register
+@inject UserManager<AppUser> UserManager
+@inject IAuthorizationService authorization
+@{
+    var resultViewManageMenu = await authorization.AuthorizeAsync(this.User, "ViewManageMenu");
+    var resultVieEditorMenu = await authorization.AuthorizeAsync(this.User, "ViewEditorMenu");
+}
+
+@using Microsoft.AspNetCore.Http
+<header class="header_area sticky-header">
+    <div class="main_menu">
+        <nav class="navbar navbar-expand-lg navbar-light main_box">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <a class="navbar-brand logo_h" asp-controller="home" asp-action="index">
+                    <img src="~/backend/dist/img/Logo1.png"
+                         alt="" width="50" height="50"> <span class="logo-text">NamHoai-Shop</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+                    <ul class="nav navbar-nav menu_nav ml-auto">
+                        @{
+                            if (resultViewManageMenu.Succeeded)
+                            {
+
+                                <li class="nav-item">
+                                    <a asp-area="Admin" asp-controller="Product" asp-action="Index" class="nav-link">Admin</a>
+                                </li>
+                            }
+                        }
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="index">Trang chủ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-controller="Product" asp-action="Index" class="nav-link">Shop</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="Contact">Liên hệ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="AboutUs">
+                                Giới
+                                thiệu
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="nav-item">
+                            <a asp-controller="Cart" asp-action="Index" class="">
+                                <span class="fa fa-shopping-cart"></span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
+                        </li>
+
+                        <li class="nav-item">
+                            <div class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                   aria-haspopup="true" aria-expanded="false">
+                                    <span class="ti-user"></span>
+                                </a>
+                                @{
+                                    if (SignInManager.IsSignedIn(User))
+                                    {
+                                        <ul class="dropdown-menu"
+                                            style="left: 50% !important; transform: translateX(-50%) !important; top: 100% !important;">
+                                            @* <li><a asp-action="index" asp-controller="wishlist">Yêu thích</a></li> *@
+                                            @* <li><a asp-action="index" asp-controller="history">Lịch sử</a></li> *@
+                                            <li><a asp-area="Identity" asp-controller="Manage" asp-action="Index">Thông tin</a></li>
+                                            @* <li><a asp-area="Identity" asp-controller="Account" asp-action="ResetPassword">Đổi mật khẩu</a></li> *@
+                                            <li>
+                                                <form id="logoutForm" asp-controller="Account" asp-action="LogOff" asp-area="Identity"
+                                                      method="post">
+                                                    <a onclick="logout()" onmouseover="this.style.color='gray';" onmouseout="this.style.color='';">Đăng xuất</a>
+
+                                                </form>
+                                            </li>
+                                        </ul>
+
+                                    }
+                                    else
+                                    {
+                                        <ul class="dropdown-menu"
+                                            style="left: 50% !important; transform: translateX(-50%) !important; top: 100% !important;">
+                                            <li><a asp-area="Identity" asp-action="login" asp-controller="account">Đăng nhập</a></li>
+                                            <li><a asp-area="Identity" asp-action="Register" asp-controller="account">Đăng ký</a></li>
+                                        </ul>
+                                    }
+                                }
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="search_input" id="search_input_box">
+        <div class="container">
+            <form action="/category/type/0/" class="d-flex justify-content-between">
+                <input type="text" name="searchTxt" class="form-control" id="search_input" placeholder="Search Here">
+                <button type="submit" class="btn"></button>
+                <span class="lnr lnr-cross" id="close_search" title="Close Search"></span>
+            </form>
+        </div>
+    </div>
+</header>
+<script>
+    function logout() {
+        document.getElementById("logoutForm").submit();
+    }
+</script>

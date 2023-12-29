@@ -1,0 +1,81 @@
+﻿@using System.Collections.Generic
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Authentication
+@using App.Areas.Identity.Models.AccountViewModels
+@using Microsoft.AspNetCore.Identity
+@using DAFW_IS220.Models
+@model LoginViewModel
+@inject SignInManager<AppUser> SignInManager
+
+@{
+    ViewData["Title"] = "Đăng nhập";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Đăng nhập / Đăng ký</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="index.php">Trang chủ<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="#">
+                        Đăng nhập / Đăng ký
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="login_box_area section_gap">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="login_box_img">
+                    <img class="img-fluid" src="~/img/LoginImg.jpg" alt="">
+                    <div class="hover">
+                        <h4>Chưa có tài khoản?</h4>
+                        <p>Tạo tài khoản để có thêm nhiều tính năng với trang web của chúng tôi!</p>
+                        <a class="primary-btn" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">Tạo tài khoản</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="login_form_inner">
+                    <h3>Đăng nhập vào trang web</h3>
+                    <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post"
+                          class="form-horizontal" role="form">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="col-md-12 form-group">
+                            <input class="form-control" type="text" asp-for="UserNameOrEmail" placeholder="Tên đăng nhập">
+                            <span asp-validation-for="UserNameOrEmail" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <input class="form-control" type="password" asp-for="Password" placeholder="Mật khẩu">
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="mt-4 col-md-12 form-group">
+                            <button type="submit" class="btn primary-btn">Đăng nhập</button>
+                            <a asp-action="ForgotPassword">Quên mật khẩu?</a>
+                        </div>
+                        <div class="mt-4 col-md-12 form-group">
+                            <div class="checkbox">
+                                <label asp-for="RememberMe" class="col-md-12">
+                                    <input asp-for="RememberMe" />
+                                    @Html.DisplayNameFor(m => m.RememberMe)
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+                    <hr>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

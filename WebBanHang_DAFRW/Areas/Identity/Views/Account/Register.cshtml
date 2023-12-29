@@ -1,0 +1,99 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using DAFW_IS220.Models
+@inject SignInManager<AppUser> SignInManager
+
+@model App.Areas.Identity.Models.AccountViewModels.RegisterViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@ViewData["Title"]</h1>
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Đăng nhập / Đăng ký</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="index.php">Trang chủ<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="#">Đăng nhập / Đăng ký</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+<!--================Login Box Area =================-->
+<section class="login_box_area section_gap">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="login_box_img">
+                    <img class="img-fluid" src="~/img/LoginImg.jpg" alt="">
+                    <div class="hover">
+                        <h4>Đã có tài khoản?</h4>
+                        <p>Đăng nhập vào website của chúng tôi!</p>
+                        <a class="primary-btn" asp-area="Identity" asp-action="login" asp-controller="account">Đăng nhập</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="login_form_inner ">
+                    <h3>Đăng ký vào trang web</h3>
+                    <form method="post" class="row login_form form-horizontal" asp-controller="Account"
+                          asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" role="form">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="col-md-12 form-group">
+                            <input class="form-control" type="text" asp-for="UserName"
+                                   placeholder="Tên đăng nhập">
+                            <span asp-validation-for="UserName" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <input class="form-control" type="password" asp-for="Password"
+                                   placeholder="Mật khẩu">
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <input class="form-control" type="password" asp-for="ConfirmPassword"
+                                   placeholder="Xác Nhận Mật khẩu">
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <input class="form-control" type="text" asp-for="TenKH" placeholder="Họ và tên">
+                            <span asp-validation-for="TenKH" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <input class="form-control" type="text" asp-for="SDT"
+                                   placeholder="Số điện thoại">
+                            <span asp-validation-for="SDT" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <input class="form-control" type="text" asp-for="Email"
+                                   placeholder="Địa chỉ email">
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div style="width: 40%;" class="row">
+                            <div class="form-group">
+                                <label asp-for="GioiTinh" class="col-md-12 control-label"></label>
+                                <div style="display: flex; justify-content: space-evenly;" class="col-md-12">
+                                    <div class="form-check">
+                                        <input type="radio" asp-for="GioiTinh" value="nam" class="form-check-input" />
+                                        <label class="form-check-label" for="GioiTinh">Nam</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input type="radio" asp-for="GioiTinh" value="nữ" class="form-check-input" />
+                                        <label class="form-check-label" for="GioiTinh">Nữ</label>
+                                    </div>
+                                    <span asp-validation-for="GioiTinh" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4 col-md-12 form-group">
+                            <input type="submit" value="Đăng ký" name="submit" class="primary-btn">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

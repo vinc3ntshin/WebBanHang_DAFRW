@@ -1,0 +1,138 @@
+﻿@using WebBanHang_DAFRW.Models;
+@using Microsoft.AspNetCore.Http
+@using WebBanHang_DAFRW.Models.ViewModels;
+@model CartItemViewModel
+@{
+    ViewData["Title"] = "Giỏ hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    // var Cart = Context.Session.Get<List<Cart>>("Cart");
+    decimal total = 0;
+}
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Giỏ hàng</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="index.html">Trang chủ<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="#">Giỏ hàng</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+<!--================Cart Area =================-->
+@if (Model != null)
+{
+    <section class="cart_area">
+        <div class="container">
+            <div class="cart_inner">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Sản phẩm</th>
+                                <th scope="col"></th>
+                                <th scope="col">Giá</th>
+                                <th scope="col">Số lượng</th>
+                                <th scope="col">Tổng tiền</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.CartItems)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="media">
+                                            <div class="d-flex">
+                                                <img src="~/media/products/@item.Product.Image" class='img-product' alt="">
+                                            </div>
+                                            <div class="media-body">
+                                                <p>@item.Product.Name</p>
+                                            </div>
+                                        </div>
+
+                                    </td>
+
+                                    <td>
+                                        <a class="btn-delete ml-3 genric-btn default-border small" asp-controller="Cart"
+                                           asp-action="RemoveFromCart" asp-route-ProductID="@item.ProductId">Xóa</a>
+                                    </td>
+                                    <td>
+                                        <h5 class="product-price">@item.Price.ToString("N0") VNĐ</h5>
+                                    </td>
+                                    <td>
+                                        <div class="product_count">
+                                            <input type="text" name="qty" data-id="1" value=@item.Quantity title="Quantity:"
+                                                   class="input-text qty">
+                                            <a asp-controller="Cart" asp-action="Increase" asp-route-id="@item.ProductId">
+                                                <button class="increase items-count" data-id="1" type="button">
+                                                    <i class="lnr lnr-chevron-up"></i>
+                                                </button>
+                                            </a>
+                                            <a asp-controller="Cart" asp-action="Decrease" asp-route-id="@item.ProductId">
+                                                <button class="reduced items-count" data-id="1" type="button">
+                                                    <i class="lnr lnr-chevron-down"></i>
+                                                </button>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <h5 class="product-cost" style="min-width: 200px;">@Model.CartItems.Where(x=>x.ProductId==@item.ProductId).Sum(x=>x.Quantity*x.Price).ToString("N0") VNĐ</h5>
+                                        @{
+                                            total += @Model.CartItems.Where(x => x.ProductId == @item.ProductId).Sum(x => x.Quantity * x.Price);
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                            @* *@
+                            <tr class="bottom_button">
+                                <td>
+                                    <a asp-controller="Cart"
+                                       asp-action="DeleteCart" class="primary-btn" name="xoahet">Xóa hết</a>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                    <h5>Tổng tiền</h5>
+                                </td>
+                                <td>
+                                    <h5 id="total-cost">@total.ToString("N0") VNĐ</h5>
+                            <tr class="out_button_area">
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                                <td></td>
+                                <td>
+                                    <div class="checkout_btn_inner d-flex align-items-center">
+                                        <a class="gray_btn" class="nav-link" asp-controller="Home" asp-action="index">Tiếp tục shopping</a>
+ 
+                                            <a asp-controller="Checkout" asp-action="Index" class="primary-btn">Đi đến thanh toán</a>
+ 
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+else
+{
+    // chưa có sản phẩm nào trong giỏ hàng
+    <br>
+    <h1 class="text-center">Giỏ hàng trống</h1>
+    // center h1
+    <br>
+
+}
+<!--================End Cart Area =================-->

@@ -1,0 +1,205 @@
+﻿@using WebBanHang_DAFRW.Models;
+@model CartItemViewModel
+@using Microsoft.AspNetCore.Http
+@using WebBanHang_DAFRW.Models.ViewModels;
+@{
+    ViewData["Title"] = "Thanh toán";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var User = ViewBag.User as DAFW_IS220.Models.AppUser;
+}
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Thủ tục thanh toán</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="index.html">Trang chủ<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="#">Thanh toán</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+<!--================Checkout Area =================-->
+<section class="checkout_area section_gap">
+    <div class="container">
+        <div class="billing_details">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h3>Chi tiết đơn hàng</h3>
+
+                    <div class="col-md-12 form-group p_star">
+                        <label> Họ và tên: @User.TENKH<span class="required">*</label><br />
+                    </div>
+                    <div class="col-md-12 form-group p_star">
+                        <label> Số điện thoại: @User.PhoneNumber</label><br />
+                        <input class="form-control" type="text" placeholder="Số điện thoại"
+                               required>
+                    </div>
+                    @{
+                        if (User.DIACHI == null)
+                        {
+                            <div class="col-md-12 form-group p_star">
+                                <label> Địa chỉ: <span style="color: red">Chưa có địa chỉ</span> </label><br />
+                                <input id="input_address" class="form-control" type="text" placeholder="Địa chỉ" required>
+                                <button style="margin-top:12px;" data-delivery="0" class="primary-btn" id="btn_address">Thêm mới địa chỉ</button>
+                                <div id="Alert_for_address"></div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-12 form-group p_star">
+                                <label> Địa chỉ: @User.DIACHI</label><br />
+                                <input id="input_address" class="form-control" type="text" placeholder="Địa chỉ" required>
+                                <button style="margin-top:12px;" data-delivery="1" class="primary-btn" id="btn_address">Thay đổi địa chỉ</button>
+                                <div id="Alert_for_address"></div>
+                            </div>
+                        }
+                    }
+
+
+                </div>
+                <div class="col-lg-4">
+                    <div class="order_box">
+                        <h2>Đơn hàng của bạn</h2>
+                        <ul class="list">
+                            @{
+                                @foreach (var item in Model.CartItems)
+                                {
+                                    <li>
+                                        <a href="#">
+                                            @item.Product.Name <span class="middle">x @item.Product.Price</span>
+                                            <span class="last">@item.Total.ToString("N0") VNĐ</span>
+                                        </a>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                        <ul class="list list_2">
+                            @{
+                                var total = Model.GrandTotal + 40000;
+                            }
+                            <li><a href="#">Tổng <span>@Model.GrandTotal.ToString("N0") VNĐ</span></a></li>
+                            <li><a href="#">Vận chuyển <span>40,000 VNĐ</span></a></li>
+                            <li><a href="#">Thành tiền <span>@total.ToString("N0") VNĐ</span></a></li>
+                        </ul>
+                        <div class="creat_account">
+                            <input type="checkbox" id="f-option4" name="selector">
+                            <label for="f-option4">Tôi đã đọc và đồng ý với </label>
+                            <a href="#">các chính sách và điều kiện*</a>
+                        </div>
+                        <div class="checkout_btn_inner d-flex align-items-center">
+                            <a asp-controller="Checkout" asp-action="Checkout" class="primary-btn">Thanh toán</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Checkout Area =================-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script>
+    var citis = document.getElementById("city");
+    var districts = document.getElementById("district");
+    var wards = document.getElementById("ward");
+    var Parameter = {
+        url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
+        method: "GET",
+        responseType: "application/json",
+    };
+    var promise = axios(Parameter);
+    promise.then(function (result) {
+        renderCity(result.data);
+    });
+
+    function renderCity(data) {
+        for (const x of data) {
+            citis.options[citis.options.length] = new Option(x.Name, x.Id);
+        }
+        citis.onchange = function () {
+            district.length = 1;
+            ward.length = 1;
+            if (this.value != "") {
+                const result = data.filter(n => n.Id === this.value);
+
+                for (const k of result[0].Districts) {
+                    district.options[district.options.length] = new Option(k.Name, k.Id);
+                }
+            }
+        };
+        district.onchange = function () {
+            ward.length = 1;
+            const dataCity = data.filter((n) => n.Id === citis.value);
+            if (this.value != "") {
+                const dataWards = dataCity[0].Districts.filter(n => n.Id === this.value)[0].Wards;
+
+                for (const w of dataWards) {
+                    wards.options[wards.options.length] = new Option(w.Name, w.Id);
+                }
+            }
+        };
+    }
+</script>
+<script>
+    $(document).ready(function () {
+
+        $("#btn_checkout").click(function (event) {
+            event.preventDefault();
+            var TypePayment = $("#TypePayment").val();
+            var TypePaymentVN = $("input[name='TypePaymentVN']:checked").val();
+            var Price = $("#Total_price").attr("data-total");
+            var Address = $("#btn_address").attr("data-delivery");
+            var model = {
+                TypePayment: TypePayment,
+                TypePaymentVN: TypePaymentVN
+            }
+            if (Address > 0) {
+                $.ajax({
+                    url: "Checkout/Checkout",
+                    type: "POST",
+                    data: model,
+                    success: function (result) {
+                        if (result.success) {
+                            if (result.code == 1) {
+                                window.location.href = "/Home/Index";
+                            }
+                            else {
+                                window.location.href = result.url;
+                            }
+                        }
+                    }
+                });
+            } else {
+                $("#Payment-result").text("Vui lòng chọn địa chỉ nhận hàng trước khi thanh toán!").css("color", "red");
+            }
+
+        });
+
+        $("#btn_address").click(function (event) {
+            event.preventDefault();
+            var Address = $("#input_address").val();
+            $.ajax({
+                url: "/Checkout/AddAddress",
+                type: "GET",
+                data: {
+                    address: Address
+                },
+                success: function (result) {
+                    if (result.success) {
+                        if (result.code == 1) {
+                            window.location.href = "@Url.RouteUrl("index")";
+                        }
+                        else {
+                            window.location.href = result.url;
+                        }
+                    }
+                }
+            });
+        });
+    });
+</script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>

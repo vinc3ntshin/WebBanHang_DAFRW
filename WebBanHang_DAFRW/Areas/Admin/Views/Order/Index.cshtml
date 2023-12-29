@@ -1,0 +1,94 @@
+﻿@model IEnumerable<OrderModel>
+@{
+    ViewData["title"] = "Order Listed";
+    // var orderDetail = ViewBag.OrderDT;
+    Layout = "_LayoutAdmin";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Orders</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Order</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Orders</h3>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <table class="table table-striped projects">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Order Code</th>
+                        <th scope="col">UserId</th>
+                        <th scope="col">Order Date</th>
+                        <th scope="col">TotalMoney</th>
+                        <th scope="col">Order Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        var orderdetail = new OrderDetails();
+                        <tr>
+                            <th>#</th>
+                            <th scope="row">@item.OrderCode</th>
+                            <td>@item.UserId</td>
+                            <td>@item.CreateDate</td>
+                            <td>@item.TotalMoney</td>
+                            <td>@item.Status</td> 
+                            <td>
+                                @if (item.Status == 1)
+                                {
+                                    <span class="text text-success">Đơn hàng mới</span>
+                                }
+                                else
+                                {
+                                    <span class="text text-danger">Đơn hàng thành công</span>
+                                }
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <a class="btn btn-info btn-sm" asp-action="ViewOrder" asp-controller="Order" asp-route-ordercode="@item.OrderCode">
+                                        <i class="fas fa-pencil-alt"></i> Details
+                                    </a>
+                                   @*  <a class="btn btn-danger btn-sm" asp-controller="Order" asp-action="Delete" asp-route-id="@item.OrderCode">
+                                        <i class="fas fa-trash"></i> Delete
+                                    </a> *@
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+
+</section>
+
