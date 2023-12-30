@@ -1,0 +1,51 @@
+@{
+    ViewBag.Title = "VnpayReturn";
+}
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/categories_styles.css">
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/categories_responsive.css">
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Liên vệ với chúng tôi</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="index.html">Trang chủ<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="#">Thanh toán</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="container product_section_container">
+    <div class="row">
+        <div class="col product_section clearfix">
+
+            <!-- Sidebar -->
+            <!-- Main Content -->
+            <div class="row">
+
+                <div class="col-md-12 text-center">
+                    @* <h1 class="">Kết quả thanh toán</h1>
+                    @if (ViewBag.ThanhToanThanhCong != null)
+                    {
+                        <p style="text-align: center; font-weight: 400px;">
+                            Bạn đã thanh toán thành công với @ViewBag.ThanhToanThanhCong! <br>
+                            Ngân hàng thanh toán: @ViewBag.bankCode <br>
+                            Mã giao dịch: @ViewBag.VNPAYID <br>
+                        </p>
+                    } *@
+                    Bạn đã thanh toán thành công!
+                </div>
+
+            </div>
+            <hr />
+            @*<div class="row">
+                    <div id="show_success"></div>
+                    <div class="col-md-9">
+
+                    </div>
+
+                </div>*@
+        </div>
+    </div>
+</div>

@@ -342,6 +342,9 @@ namespace WebBanHang_DAFRW.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
+                    b.Property<string>("TenKH")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal?>("TotalMoney")
                         .HasColumnType("decimal(18,2)");
 

@@ -15,6 +15,7 @@ namespace WebBanHang_DAFRW.Models
         public string UserId { get; set; }
         [ForeignKey("UserId")]
         public AppUser AppUser { get; set; }
+        public string TenKH {  get; set; }
         public DateTime CreateDate { get; set; }
         public int Status { get; set; }
         public virtual ICollection<OrderDetails> OrderDetails { get; set; }
